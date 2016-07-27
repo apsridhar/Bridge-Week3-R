@@ -1,0 +1,137 @@
+---
+title: "R-Week03-Assignment"
+author: "Sridhar AlwarsamyPerumalsamy"
+date: "July 24, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Mushrooms Dataset UCI
+
+<h3>About this data set</h3>
+
+This data set is about gilled mushrooms in the Agaricus and Lepiota Family of mushrooms. It describes their physical characteristics. These characteristic features are used in classification of mushrooms as poisonous or edible.Each of these feature set  is  labeled "P" means "Poisonous" or  "E" means edibile. It has a total of 8124 instacnes and each instance has 22 features. 
+
+Edible: 4208 (51.8%) and  poisonous: 3916 (48.2%)
+
+Example:<br>
+p,x,s,n,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,k,s,u<br>
+e,x,s,y,t,a,f,c,b,k,e,c,s,s,w,w,p,w,o,p,n,n,g<br>
+e,b,s,w,t,l,f,c,b,n,e,c,s,s,w,w,p,w,o,p,n,n,m<br>
+
+We prepare data set from the given mushroom data set using these features and its values.
+
+1.Odor---->  almond=a,anise=l,creosote=c,fishy=y,foul=f,musty=m,none=n,pungent=p,spicy=s<br>
+2.Spore-print-color--->black=k,brown=n,buff=b,chocolate=h,green=r,orange=o,purple=u,white=w,yellow=y<br>
+3.Population------>abundant=a,clustered=c,numerous=n,scattered=s,several=v,solitary=y<br>
+4.Habitat  ----->  grasses=g,leaves=l,meadows=m,paths=p,urban=u,waste=w,woods=d<br>
+
+
+
+<h3>Why these features are considered?</h3>
+<pre style="justify">
+One of the researcher of this data set "Wlodek Duch" has published logical rules to classify the mushrooms. He chosen the above features for classification. So, for this assignment study I have decided to use the same features to create the dataframe.
+
+```{r , echo=FALSE}
+
+#load the entire data set
+mushroom <- read.csv("agaricus-lepiota.csv",
+               header = TRUE,
+               quote="\"",
+               stringsAsFactors= FALSE)
+
+
+modified =mushroom[1:50, c('Label','odor','Spore.print.color','population','habitat')]
+
+rows =nrow(modified)
+cols=ncol(modified)
+
+for( i in 1:rows){
+  for (j in 1:cols){
+    #work on the label column and replace abbreviations
+    if(modified[i,1]=="p"){
+      modified[i,1]="Poisonous"
+    }else if(modified[i,1]=="e"){
+       modified[i,1]="Edibile"
+    }
+    #work on the odor column
+     if(modified[i,2]=="a"){
+      modified[i,2]="almond"
+     }else if(modified[i,2]=="p"){
+      modified[i,2]="pungent"
+     }else if(modified[i,2]=="c"){
+      modified[i,2]="creosote"
+     }else if(modified[i,2]=="y"){
+      modified[i,2]="fishy"
+     }else if(modified[i,2]=="f"){
+      modified[i,2]="foul"
+     }else if(modified[i,2]=="m"){
+      modified[i,2]="musty"
+     }else if(modified[i,2]=="n"){
+      modified[i,2]="none"
+     }else if(modified[i,2]=="s"){
+      modified[i,2]="spicy"
+     }else if(modified[i,2]=="l"){
+      modified[i,2]="anise"
+     }
+    #work on the  column Spore-print-color
+     if(modified[i,3]=="k"){
+      modified[i,3]="black"
+     }else if(modified[i,3]=="n"){
+      modified[i,3]="brown"
+     }else if(modified[i,3]=="b"){
+      modified[i,3]="buff"
+     }else if(modified[i,3]=="h"){
+      modified[i,3]="chocolate"
+     }else if(modified[i,3]=="r"){
+      modified[i,3]="green"
+     }else if(modified[i,3]=="o"){
+      modified[i,3]="orange"
+     }else if(modified[i,3]=="u"){
+      modified[i,3]="purple"
+     }else if(modified[i,3]=="w"){
+      modified[i,3]="white"
+     }else if(modified[i,3]=="y"){
+      modified[i,3]="yellow"
+     }
+     #work on the  column Population
+     if(modified[i,4]=="a"){
+      modified[i,4]="abundant"
+     }else if(modified[i,4]=="c"){
+      modified[i,4]="clustered"
+     }else if(modified[i,4]=="n"){
+      modified[i,4]="numerous"
+     }else if(modified[i,4]=="s"){
+      modified[i,4]="scattered"
+     }else if(modified[i,4]=="v"){
+      modified[i,4]="sevaral"
+     }else if(modified[i,4]=="y"){
+      modified[i,4]="solitary"
+     }
+     #work on the  column habitat
+     if(modified[i,5]=="g"){
+      modified[i,5]="grasses"
+     }else if(modified[i,5]=="l"){
+      modified[i,5]="leaves"
+     }else if(modified[i,5]=="m"){
+      modified[i,5]="meadows"
+     }else if(modified[i,5]=="p"){
+      modified[i,5]="paths"
+     }else if(modified[i,5]=="g"){
+      modified[i,5]="grasses"
+     }else if(modified[i,5]=="u"){
+      modified[i,5]="urban"
+     }else if(modified[i,5]=="d"){
+      modified[i,5]="woods"
+     }else if(modified[i,5]=="w"){
+      modified[i,5]="waste"
+     }
+  }
+}
+library(knitr)
+kable(modified, format = "markdown")
+
+```
